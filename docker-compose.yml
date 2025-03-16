@@ -9,6 +9,8 @@ services:
       - KC_DB_USERNAME=${POSTGRES_USER}
       - KC_DB_PASSWORD=${POSTGRES_PASSWORD}
       - KC_DB_URL_DATABASE=${POSTGRES_DB}
+    volumes:
+      - ./keycloak/themes:/opt/keycloak/themes
     depends_on:
       keycloak-database:
         condition: service_healthy
