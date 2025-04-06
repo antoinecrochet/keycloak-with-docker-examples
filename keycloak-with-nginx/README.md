@@ -11,10 +11,12 @@ The Docker Compose file defines the following services:
 - **Environment Variables**:
   - `KC_BOOTSTRAP_ADMIN_USERNAME`: Admin username.
   - `KC_BOOTSTRAP_ADMIN_PASSWORD`: Admin password - remember to change this after first login.
-  - `KC_DB_URL_HOST`: Hostname for the PostgreSQL database (`postgres`).
+  - `KC_DB`: Database vendor
+  - `KC_DB_URL`: JDBC url for the PostgreSQL database
   - `KC_DB_USERNAME`: Username for the PostgreSQL database (set via `POSTGRES_USER` environment variable).
   - `KC_DB_PASSWORD`: Password for the PostgreSQL database (set via `POSTGRES_PASSWORD` environment variable).
-  - `KC_DB_URL_DATABASE`: Database name for Keycloak (`POSTGRES_DB` environment variable).
+  - `KC_METRICS_ENABLED`: If the server should expose metrics.
+  - `KC_HEALTH_ENABLED`: If the server should expose health check endpoints.
 - **Volumes**:
   - Mounts custom Keycloak themes from the `./keycloak/themes` directory to the container.
 
