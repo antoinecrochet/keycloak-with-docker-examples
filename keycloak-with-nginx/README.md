@@ -1,67 +1,103 @@
-# keycloak-deployment-basic
+# Keycloak with Nginx  
 
-This configuration provides a Docker Compose configuration to set up a **Keycloak** instance with a **PostgreSQL** database and an **Nginx** reverse proxy.
+This example demonstrates how to run a **single-node Keycloak server** behind **nginx** with a PostgreSQL database and optional custom themes. Nginx acts as a reverse proxy, exposing virtual hosts for public and admin access.
 
-## Services
+---
 
-The Docker Compose file defines the following services:
+## 📁 Folder Structure
+```
+keycloak-with-nginx/
+├── docker-compose.yml
+├── nginx/
+│   └── conf.d/
+│       └── keycloak.conf    # Nginx config for keycloak hosts
+├── keycloak/
+│   └── themes/              # Optional custom Keycloak themes
+├── postgres/
+│   └── data/                # Database persistence volume
+```
 
-### 1. Keycloak
-- **Image**: `keycloak/keycloak:26.1`
-- **Environment Variables**:
-  - `KC_BOOTSTRAP_ADMIN_USERNAME`: Admin username.
-  - `KC_BOOTSTRAP_ADMIN_PASSWORD`: Admin password - remember to change this after first login.
-  - `KC_DB`: Database vendor
-  - `KC_DB_URL`: JDBC url for the PostgreSQL database
-  - `KC_DB_USERNAME`: Username for the PostgreSQL database (set via `POSTGRES_USER` environment variable).
-  - `KC_DB_PASSWORD`: Password for the PostgreSQL database (set via `POSTGRES_PASSWORD` environment variable).
-  - `KC_METRICS_ENABLED`: If the server should expose metrics.
-  - `KC_HEALTH_ENABLED`: If the server should expose health check endpoints.
-- **Volumes**:
-  - Mounts custom Keycloak themes from the `./keycloak/themes` directory to the container.
+---
 
-### 2. Keycloak Database (Postgres)
-- **Image**: `postgres:17`
-- **Environment Variables**:
-  - `POSTGRES_USER`: Username for the PostgreSQL database.
-  - `POSTGRES_PASSWORD`: Password for the PostgreSQL database.
-  - `POSTGRES_DB`: Name of the PostgreSQL database.
-- **Volumes**:
-  - Mounts the `./postgres/data` directory for persistent storage of PostgreSQL data.
+## 🧰 Services Overview
 
-### 3. Nginx
-- **Image**: `nginx`
-- **Container Name**: `nginx`
-- **Ports**: Exposes port `80` on the host, forwarding to port `80` in the container.
+| Service            | Description                                      |
+|--------------------|--------------------------------------------------|
+| `keycloak`         | Single Keycloak instance with PostgreSQL backend |
+| `keycloak-database`| PostgreSQL database                              |
+| `nginx`            | Reverse proxy with `auth.localhost` & `auth-admin.localhost` vhosts |
 
-## Requirements
+---
 
-- Docker
-- Docker Compose
+## 🚀 Getting Started
 
-## Configuration
+### 1. Clone the Repository
 
-### Environment Variables
+```bash
+git clone https://github.com/antoinecrochet/keycloak-with-docker-examples.git
+cd keycloak-with-docker-examples/keycloak-with-nginx
+```
 
-Before running the services, define the following environment variables in a `.env` file or the environment:
+### 2. Create a `.env` File
 
-- `POSTGRES_USER`: Username for PostgreSQL (e.g., `keycloak_user`).
-- `POSTGRES_PASSWORD`: Password for PostgreSQL (e.g., `securepassword`).
-- `POSTGRES_DB`: Name of the PostgreSQL database (e.g., `keycloak_db`).
+```env
+POSTGRES_USER=keycloak
+POSTGRES_PASSWORD=changeme
+POSTGRES_DB=keycloak
+```
 
-### Keycloak Themes
+> ⚠️ Don't forget to change credentials if you're using this beyond local testing.
 
-You can customize the Keycloak themes by placing theme files in the `./keycloak/themes` directory. This will be mounted into the Keycloak container which allows you to add new themes on the fly, you won't need to restart the server to use them.
+### 3. Update Your Hosts File
 
-### Nginx Configuration
+Add these lines to your system’s `/etc/hosts` file:
 
-You can customize the Nginx configuration by placing your custom Nginx configuration files in the `./nginx/conf.d` directory.
+```bash
+127.0.0.1 auth.localhost
+127.0.0.1 auth-admin.localhost
+```
 
-## Running the Setup
+This allows the nginx reverse proxy to correctly route requests based on the hostname.
 
-1. Clone the repository or download the files.
-2. Make sure the environment variables are set by creating a `.env` file or setting them directly in your environment.
-3. Run Docker Compose to start the services:
+### 4. Start the Environment
 
-   ```bash
-   docker compose up
+```bash
+docker compose up -d
+```
+
+### 5. Access Keycloak
+
+- 🌐 `http://auth.localhost` — public-facing Keycloak  
+- 🛠 `http://auth-admin.localhost` — admin console login
+
+---
+
+## 🔐 Admin Credentials
+
+| Username | Password |
+|----------|----------|
+| `admin`  | `admin` *(you’ll be prompted to change this on first login)* |
+
+---
+
+## 🎨 Custom Themes
+
+Mount your custom Keycloak themes inside the `./keycloak/themes/` folder. They will be available under `/opt/keycloak/themes` inside the container.
+
+---
+
+## 🔍 Notes
+
+- Keycloak runs in `start-dev` mode for ease of local development.
+- Nginx performs virtual host-based routing.
+- Health and metrics endpoints are enabled.
+
+---
+
+## 🧼 Cleanup
+
+To shut down and remove volumes:
+
+```bash
+docker-compose down -v
+```
