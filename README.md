@@ -15,7 +15,7 @@ This repository provides a collection of **ready-to-run Keycloak setups using Do
 |--------|-------------|
 | [`keycloak-with-nginx`](./keycloak-with-nginx) | A single Keycloak instance behind an nginx reverse proxy with virtual hosts. Supports custom themes. |
 | [`keycloak-cluster-with-jdbc-ping`](./keycloak-cluster-with-jdbc-ping) | A basic Keycloak HA setup with two nodes using JDBC_PING for cluster discovery and nginx as a load balancer. |
-
+| [`keycloak-cluster-with-tcp-ping`](./keycloak-cluster-with-tcp-ping) | A basic Keycloak HA setup with two nodes using TCPPING for cluster discovery and nginx as a load balancer. Deprecated since Keycloak 26.  |
 ---
 
 ## 🧰 Prerequisites
