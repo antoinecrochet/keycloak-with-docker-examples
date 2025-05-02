@@ -11,14 +11,15 @@ services:
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
       KC_METRICS_ENABLED: "true"
       KC_HEALTH_ENABLED: "true"
-      KC_LOG_LEVEL: 'INFO,org.keycloak.events:DEBUG'
+      KC_LOG_LEVEL: "INFO,org.keycloak.events:DEBUG"
+      KC_LOG: "file,console"
     depends_on:
       keycloak-database:
         condition: service_healthy
     ports:
       - "${KEYCLOAK_PORT}:8080"
     volumes:
-      - ./keycloak/logs:/opt/jboss/keycloak/standalone/log
+      - ./keycloak/log:/opt/keycloak/data/log
     command: start-dev
 
   keycloak-database:
@@ -42,7 +43,7 @@ services:
     command: filebeat -e --strict.perms=false
     volumes:
       - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-      - ./keycloak/logs:/keycloak-logs:ro
+      - ./keycloak/log:/keycloak-logs:ro
     depends_on:
       - keycloak
 
@@ -61,9 +62,10 @@ services:
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    container_name: elasticsearch
     environment:
       - discovery.type=single-node
-      - xpack.security.enabled=false
+      - xpack.security.enabled=false # do not disable security in production
       - xpack.security.transport.ssl.enabled=false
       - xpack.security.http.ssl.enabled=false
       - bootstrap.memory_lock=true
@@ -85,6 +87,7 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
+    container_name: kibana
     ports:
       - "${KIBANA_PORT}:5601"
     environment:

@@ -4,12 +4,6 @@ filebeat.inputs:
     enabled: true
     paths:
       - /keycloak-logs/*.log
-    # parsers:
-    #   multiline:
-    #     type: pattern
-    #     pattern: '^\['             # assumes Keycloak log lines start with "[2025-...]", etc.
-    #     negate: true
-    #     match: after
 
 output.logstash:
   hosts: ["logstash:5044"]
