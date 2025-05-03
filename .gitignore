@@ -1,3 +1,6 @@
 **/postgres/data
 **/keycloak/themes
+**/keycloak/log
+**/elasticsearch/data
+**/logstash/data
 .env
