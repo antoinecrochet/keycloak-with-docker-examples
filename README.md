@@ -16,6 +16,7 @@ This repository provides a collection of **ready-to-run Keycloak setups using Do
 | [`keycloak-with-nginx`](./keycloak-with-nginx) | A single Keycloak instance behind an nginx reverse proxy with virtual hosts. Supports custom themes. |
 | [`keycloak-cluster-with-jdbc-ping`](./keycloak-cluster-with-jdbc-ping) | A basic Keycloak HA setup with two nodes using JDBC_PING for cluster discovery and nginx as a load balancer. |
 | [`keycloak-cluster-with-tcp-ping`](./keycloak-cluster-with-tcp-ping) | A basic Keycloak HA setup with two nodes using TCPPING for cluster discovery and nginx as a load balancer. Deprecated since Keycloak 26.  |
+| [`keycloak-with-elk`](./keycloak-with-elk)                      | A single Keycloak instance with PostgreSQL, log shipping via Filebeat to an ELK stack (Elasticsearch, Logstash, Kibana). |
 ---
 
 ## 🧰 Prerequisites
@@ -31,8 +32,8 @@ This repository provides a collection of **ready-to-run Keycloak setups using Do
 Each subfolder includes its own `README.md` and can be run independently.
 
 ```bash
-cd keycloak-with-nginx        # or keycloak-cluster-with-jdbc-ping
-cp .env.example .env          # if provided
+cd keycloak-with-nginx        # or any other subfolder
+cp .env.sample .env           # if provided
 docker-compose up -d
 ```
 
@@ -46,7 +47,8 @@ For domain-based routing, be sure to update your `/etc/hosts` file as described 
 ✅ PostgreSQL  
 ✅ Reverse proxies (nginx)  
 ✅ Custom themes (optional)  
-✅ Cluster discovery (via JDBC_PING)
+✅ Cluster discovery (via JDBC_PING)  
+✅ Elasticsearch, Logstash, Kibana
 
 ---
 
