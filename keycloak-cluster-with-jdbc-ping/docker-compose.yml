@@ -1,6 +1,6 @@
 services:
   keycloak1:
-    image: keycloak/keycloak:26.1
+    image: keycloak/keycloak:26.6
     container_name: keycloak1
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
@@ -20,7 +20,7 @@ services:
     command: start-dev
 
   keycloak2:
-    image: keycloak/keycloak:26.1
+    image: keycloak/keycloak:26.6
     container_name: keycloak2
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin

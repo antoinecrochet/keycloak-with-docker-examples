@@ -32,7 +32,7 @@ keycloak-with-elk/
 
 | Service             | Description                                       |
 | ------------------- | ------------------------------------------------- |
-| `keycloak`          | Keycloak 26.1 instance with PostgreSQL backend    |
+| `keycloak`          | Keycloak 26.6 instance with PostgreSQL backend    |
 | `keycloak-database` | PostgreSQL 17 for Keycloak                        |
 | `filebeat`          | Collects logs from Keycloak and ships to Logstash |
 | `logstash`          | Parses and forwards logs to Elasticsearch         |

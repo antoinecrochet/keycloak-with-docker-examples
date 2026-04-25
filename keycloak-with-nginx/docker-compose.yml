@@ -1,6 +1,6 @@
 services:
   keycloak:
-    image: keycloak/keycloak:26.1
+    image: keycloak/keycloak:26.6
     container_name: keycloak
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin

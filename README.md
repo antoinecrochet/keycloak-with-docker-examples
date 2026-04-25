@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![Dockerized](https://img.shields.io/badge/dockerized-yes-blue.svg)](https://www.docker.com/)
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
-![Keycloak Version](https://img.shields.io/badge/keycloak-26.1-blueviolet)
+![Keycloak Version](https://img.shields.io/badge/keycloak-26.6-blueviolet)
 
 This repository provides a collection of **ready-to-run Keycloak setups using Docker and Docker Compose**, covering single-node, cluster, and proxy-based configurations. Each subfolder is a self-contained example with its own `docker-compose.yml`.
 
